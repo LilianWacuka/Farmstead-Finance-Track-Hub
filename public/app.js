@@ -1,5 +1,5 @@
-// API URL - Using specific IP address
-const API_URL = 'http://192.168.100.191:5000/api';
+// API URL - Using specific IP address and port 3000
+const API_URL = 'http://192.168.100.191:3000/api';
 
 // Add debug logging
 console.log('API URL:', API_URL);
