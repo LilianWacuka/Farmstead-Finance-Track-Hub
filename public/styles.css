@@ -1,0 +1,245 @@
+:root {
+    --primary-green: #4CAF50;
+    --primary-brown: #8D6E63;
+    --primary-yellow: #FFEB3B;
+    --light-bg: #f8f9fa;
+}
+
+body {
+    background-color: var(--light-bg);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.card {
+    border: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.card-title {
+    color: var(--primary-brown);
+    font-weight: 600;
+}
+
+.btn-primary {
+    background-color: var(--primary-green);
+    border-color: var(--primary-green);
+}
+
+.btn-primary:hover {
+    background-color: #43A047;
+    border-color: #43A047;
+}
+
+.btn-success {
+    background-color: var(--primary-green);
+    border-color: var(--primary-green);
+}
+
+.btn-success:hover {
+    background-color: #43A047;
+    border-color: #43A047;
+}
+
+.nav-tabs .nav-link {
+    color: var(--primary-brown);
+}
+
+.nav-tabs .nav-link.active {
+    color: var(--primary-green);
+    border-color: var(--primary-green);
+}
+
+.table th {
+    color: var(--primary-brown);
+    font-weight: 600;
+}
+
+.form-label {
+    color: var(--primary-brown);
+    font-weight: 500;
+}
+
+.form-control:focus {
+    border-color: var(--primary-green);
+    box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25);
+}
+
+/* Dashboard Cards */
+.card.bg-success {
+    background-color: var(--primary-green) !important;
+}
+
+.card.bg-danger {
+    background-color: #f44336 !important;
+}
+
+.card.bg-primary {
+    background-color: var(--primary-brown) !important;
+}
+
+/* Table Styling */
+.table {
+    margin-top: 1rem;
+}
+
+.table th {
+    background-color: var(--primary-green);
+    color: white;
+    font-weight: 500;
+    padding: 12px;
+}
+
+.table td {
+    padding: 12px;
+    vertical-align: middle;
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: rgba(76, 175, 80, 0.05);
+}
+
+.table tbody tr:hover {
+    background-color: rgba(76, 175, 80, 0.1);
+}
+
+/* Summary Cards Enhancement */
+.card.bg-success, .card.bg-danger, .card.bg-primary {
+    transition: transform 0.2s;
+}
+
+.card.bg-success:hover, .card.bg-danger:hover, .card.bg-primary:hover {
+    transform: translateY(-5px);
+}
+
+/* Report Buttons Enhancement */
+.btn-group {
+    gap: 10px;
+}
+
+.btn-success {
+    min-width: 120px;
+    margin: 5px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+    
+    .card {
+        margin-bottom: 15px;
+    }
+    
+    .btn-group {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .btn-group .btn {
+        margin-bottom: 5px;
+    }
+}
+
+/* Responsive Table */
+@media (max-width: 768px) {
+    .table-responsive {
+        border: 0;
+    }
+    
+    .table th, .table td {
+        padding: 8px;
+        font-size: 14px;
+    }
+}
+
+/* Report Download Styles */
+.dropdown-menu {
+    border: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 0.5rem;
+}
+
+.dropdown-item {
+    border-radius: 6px;
+    padding: 0.5rem 1rem;
+    color: var(--primary-brown);
+    transition: all 0.2s;
+}
+
+.dropdown-item:hover {
+    background-color: rgba(76, 175, 80, 0.1);
+    color: var(--primary-green);
+}
+
+.dropdown-item:active {
+    background-color: var(--primary-green);
+    color: white;
+}
+
+.btn-success.dropdown-toggle {
+    background-color: var(--primary-green);
+    border-color: var(--primary-green);
+    padding: 0.75rem 1.5rem;
+    font-weight: 500;
+}
+
+.btn-success.dropdown-toggle:hover,
+.btn-success.dropdown-toggle:focus {
+    background-color: #43A047;
+    border-color: #43A047;
+}
+
+/* Report Cards */
+.card .card-title {
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+/* Responsive Adjustments for Reports */
+@media (max-width: 768px) {
+    .col-md-6 {
+        margin-bottom: 1rem;
+    }
+    
+    .dropdown-menu {
+        width: 100% !important;
+    }
+}
+
+/* Form Field Styles */
+.form-control::placeholder {
+    color: #6c757d;
+    font-style: italic;
+    font-size: 0.9em;
+}
+
+.form-control:focus::placeholder {
+    color: #495057;
+}
+
+/* Category Description */
+#record-description {
+    transition: all 0.3s ease;
+}
+
+#record-description:focus {
+    border-color: var(--primary-green);
+    box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25);
+}
+
+/* Category Select Styles */
+#record-category {
+    font-weight: 500;
+}
+
+#record-category option {
+    padding: 8px;
+}
+
+#record-category optgroup {
+    font-weight: 600;
+    color: var(--primary-brown);
+} 

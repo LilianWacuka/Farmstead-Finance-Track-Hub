@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmstead Finance Hub</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Auth Section -->
+    <div id="auth-section" class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="text-center mb-4">Farmstead Finance Hub</h2>
+                        <ul class="nav nav-tabs" id="authTabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="login-tab" data-bs-toggle="tab" href="#login" role="tab">Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="register-tab" data-bs-toggle="tab" href="#register" role="tab">Register</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content mt-3" id="authTabContent">
+                            <div class="tab-pane fade show active" id="login" role="tabpanel">
+                                <form id="login-form">
+                                    <div class="mb-3">
+                                        <label for="login-email" class="form-label">Email</label>
+                                        <input type="email" class="form-control" id="login-email" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="login-password" class="form-label">Password</label>
+                                        <input type="password" class="form-control" id="login-password" required>
+                                    </div>
+                                    <div class="mb-3 text-end">
+                                        <a href="#" class="text-decoration-none" onclick="showForgotPassword()">Forgot Password?</a>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary w-100">Login</button>
+                                </form>
+                            </div>
+                            <div class="tab-pane fade" id="register" role="tabpanel">
+                                <form id="register-form">
+                                    <div class="mb-3">
+                                        <label for="register-name" class="form-label">Full Name</label>
+                                        <input type="text" class="form-control" id="register-name" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="register-farm-name" class="form-label">Farm Name</label>
+                                        <input type="text" class="form-control" id="register-farm-name" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="register-location" class="form-label">Farm Location</label>
+                                        <input type="text" class="form-control" id="register-location" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="register-email" class="form-label">Email</label>
+                                        <input type="email" class="form-control" id="register-email" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="register-password" class="form-label">Password</label>
+                                        <input type="password" class="form-control" id="register-password" required 
+                                               pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&]{6,}$"
+                                               title="Password must be at least 6 characters long and include both letters and numbers">
+                                        <div class="form-text">Password must be at least 6 characters long and include both letters and numbers</div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary w-100">Register</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div class="modal fade" id="forgotPasswordModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Reset Password</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="forgot-password-form">
+                        <div class="mb-3">
+                            <label for="reset-email" class="form-label">Email Address</label>
+                            <input type="email" class="form-control" id="reset-email" required>
+                            <div class="form-text">Enter your registered email address to receive a password reset link.</div>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Send Reset Link</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reset Password Modal -->
+    <div class="modal fade" id="resetPasswordModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Set New Password</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="reset-password-form">
+                        <input type="hidden" id="reset-token">
+                        <div class="mb-3">
+                            <label for="new-password" class="form-label">New Password</label>
+                            <input type="password" class="form-control" id="new-password" required
+                                   pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
+                                   title="Password must be at least 8 characters long and include both letters and numbers">
+                            <div class="form-text">Password must be at least 8 characters long and include both letters and numbers</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirm-password" class="form-label">Confirm New Password</label>
+                            <input type="password" class="form-control" id="confirm-password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Reset Password</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Section -->
+    <div id="dashboard-section" class="container-fluid p-0 d-none">
+        <!-- Navigation Bar -->
+        <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: var(--primary-green);">
+            <div class="container">
+                <a class="navbar-brand" href="#">Farmstead Finance Hub</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" onclick="showDashboard()">Dashboard</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                                Reports
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#" onclick="downloadReport('weekly', 'csv')">Weekly Report (CSV)</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="downloadReport('weekly', 'pdf')">Weekly Report (PDF)</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#" onclick="downloadReport('monthly', 'csv')">Monthly Report (CSV)</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="downloadReport('monthly', 'pdf')">Monthly Report (PDF)</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav">
+                        <li class="nav-item" id="auth-nav-item">
+                            <a class="nav-link" href="#" onclick="showAuth()">Login/Register</a>
+                        </li>
+                        <li class="nav-item d-none" id="user-nav-item">
+                            <span class="nav-link" id="user-name"></span>
+                        </li>
+                        <li class="nav-item d-none" id="logout-nav-item">
+                            <button class="btn btn-outline-light" onclick="logout()">Logout</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="container mt-4">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 class="mb-4">Farmer Dashboard</h2>
+                    <div class="row mb-4">
+                        <div class="col-md-4">
+                            <div class="card bg-success text-white">
+                                <div class="card-body">
+                                    <h5 class="card-title">Total Income</h5>
+                                    <h3 id="total-income">$0.00</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card bg-danger text-white">
+                                <div class="card-body">
+                                    <h5 class="card-title">Total Expenses</h5>
+                                    <h3 id="total-expenses">$0.00</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card bg-primary text-white">
+                                <div class="card-body">
+                                    <h5 class="card-title">Net Balance</h5>
+                                    <h3 id="net-balance">$0.00</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Add Record Form -->
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Add New Record</h5>
+                            <form id="record-form">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="mb-3">
+                                            <label class="form-label">Type</label>
+                                            <select class="form-select" id="record-type" required>
+                                                <option value="income">Income</option>
+                                                <option value="expense">Expense</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="mb-3">
+                                            <label class="form-label">Category</label>
+                                            <select class="form-select" id="record-category" required>
+                                                <!-- Income Categories -->
+                                                <optgroup label="Income" class="income-categories" style="display: none;">
+                                                    <option value="crop_sales" data-description="Revenue from selling harvested crops">Crop Sales</option>
+                                                    <option value="livestock_sales" data-description="Revenue from selling livestock, dairy, or poultry">Livestock Sales</option>
+                                                    <option value="government_subsidies" data-description="Financial support from government programs">Government Subsidies</option>
+                                                    <option value="insurance_payouts" data-description="Compensation from insurance claims">Insurance Payouts</option>
+                                                    <option value="equipment_rental" data-description="Income from renting out farm equipment">Equipment Rental Income</option>
+                                                    <option value="other_income" data-description="Any other sources of farm income">Other Income</option>
+                                                </optgroup>
+                                                <!-- Expense Categories -->
+                                                <optgroup label="Expenses" class="expense-categories">
+                                                    <option value="seeds_plants" data-description="Cost of seeds, seedlings, and plants">Seeds & Plants</option>
+                                                    <option value="fertilizers_pesticides" data-description="Cost of fertilizers, pesticides, and soil amendments">Fertilizers & Pesticides</option>
+                                                    <option value="drugs_vaccines" data-description="Cost of veterinary medicines and animal health products">Drugs/Vaccines & Supplements</option>
+                                                    <option value="equipment_machinery" data-description="Cost of farm equipment and machinery">Equipment & Machinery</option>
+                                                    <option value="labor_costs" data-description="Wages and salaries for farm workers">Labor Costs</option>
+                                                    <option value="utilities" data-description="Electricity, water, and other utility bills">Utilities</option>
+                                                    <option value="transportation_fuel" data-description="Fuel costs and transportation expenses">Transportation & Fuel</option>
+                                                    <option value="insurance" data-description="Farm insurance premiums">Insurance</option>
+                                                    <option value="land_lease" data-description="Cost of leasing or renting land">Land Lease/Rent</option>
+                                                    <option value="maintenance_repairs" data-description="Maintenance and repair costs">Maintenance & Repairs</option>
+                                                    <option value="other_expenses" data-description="Any other farm-related expenses">Other Expenses</option>
+                                                </optgroup>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="mb-3">
+                                            <label class="form-label">Amount</label>
+                                            <input type="number" class="form-control" id="record-amount" step="0.01" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="mb-3">
+                                            <label class="form-label">Date</label>
+                                            <input type="date" class="form-control" id="record-date" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">Payment Method</label>
+                                            <select class="form-select" id="record-payment-method" required>
+                                                <option value="cash">Cash</option>
+                                                <option value="check">Check</option>
+                                                <option value="bank_transfer">Bank Transfer</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">Vendor/Buyer</label>
+                                            <input type="text" class="form-control" id="record-vendor-buyer" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">Receipt Number (Optional)</label>
+                                            <input type="text" class="form-control" id="record-receipt-number">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="mb-3">
+                                            <label class="form-label">Description</label>
+                                            <input type="text" class="form-control" id="record-description" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">Notes (Optional)</label>
+                                            <input type="text" class="form-control" id="record-notes">
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Add Record</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Filter Section -->
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Filter Records</h5>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">Start Date</label>
+                                        <input type="date" class="form-control" id="filter-start-date">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">End Date</label>
+                                        <input type="date" class="form-control" id="filter-end-date">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">Quick Filters</label>
+                                        <select class="form-select" id="quick-filter">
+                                            <option value="">Select Period</option>
+                                            <option value="week">This Week</option>
+                                            <option value="month">This Month</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <button id="apply-filter" class="btn btn-secondary">Apply Filter</button>
+                        </div>
+                    </div>
+
+                    <!-- Records Table -->
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Financial Records</h5>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Type</th>
+                                            <th>Category</th>
+                                            <th>Amount</th>
+                                            <th>Description</th>
+                                            <th>Vendor/Buyer</th>
+                                            <th>Payment Method</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="records-table-body">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Report Buttons -->
+                    <div class="mt-4">
+                        <h5>Download Reports</h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h6 class="card-title">Weekly Reports</h6>
+                                        <div class="dropdown">
+                                            <button class="btn btn-success dropdown-toggle w-100" type="button" data-bs-toggle="dropdown">
+                                                Download Weekly Report
+                                            </button>
+                                            <ul class="dropdown-menu w-100">
+                                                <li><a class="dropdown-item" href="#" onclick="downloadReport('weekly', 'csv')">CSV Format</a></li>
+                                                <li><a class="dropdown-item" href="#" onclick="downloadReport('weekly', 'pdf')">PDF Format</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h6 class="card-title">Monthly Reports</h6>
+                                        <div class="dropdown">
+                                            <button class="btn btn-success dropdown-toggle w-100" type="button" data-bs-toggle="dropdown">
+                                                Download Monthly Report
+                                            </button>
+                                            <ul class="dropdown-menu w-100">
+                                                <li><a class="dropdown-item" href="#" onclick="downloadReport('monthly', 'csv')">CSV Format</a></li>
+                                                <li><a class="dropdown-item" href="#" onclick="downloadReport('monthly', 'pdf')">PDF Format</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html> 
