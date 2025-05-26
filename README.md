@@ -53,7 +53,7 @@ A comprehensive financial management system designed specifically for farmers to
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/farmstead-finance-hub.git
+   git clone https://github.com/LilianWacuka/Farmstead-Finance-Hub.git
    cd farmstead-finance-hub
    ```
 
