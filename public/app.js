@@ -1,6 +1,9 @@
 // API URL - Using specific IP address
 const API_URL = 'http://192.168.100.191:5000/api';
 
+// Add debug logging
+console.log('API URL:', API_URL);
+
 // DOM Elements
 const authSection = document.getElementById('auth-section');
 const dashboardSection = document.getElementById('dashboard-section');
@@ -40,12 +43,14 @@ document.addEventListener('DOMContentLoaded', () => {
 // Load User Info
 async function loadUserInfo() {
     try {
+        console.log('Attempting to load user info...');
         const response = await fetch(`${API_URL}/auth/user`, {
             headers: {
                 'x-auth-token': localStorage.getItem('token')
             }
         });
 
+        console.log('User info response:', response.status);
         if (response.ok) {
             const user = await response.json();
             userNameElement.textContent = `Welcome, ${user.name}`;
@@ -98,6 +103,7 @@ loginForm.addEventListener('submit', async (e) => {
     const password = document.getElementById('login-password').value;
 
     try {
+        console.log('Attempting login...');
         const response = await fetch(`${API_URL}/auth/login`, {
             method: 'POST',
             headers: {
@@ -106,6 +112,7 @@ loginForm.addEventListener('submit', async (e) => {
             body: JSON.stringify({ email, password })
         });
 
+        console.log('Login response:', response.status);
         const data = await response.json();
         if (response.ok) {
             localStorage.setItem('token', data.token);
