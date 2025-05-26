@@ -1,6 +1,5 @@
 # Farmstead Finance Hub
 # Deployment live link
-https://farmstead-finance-hub.vercel.app/
 A comprehensive financial management system designed specifically for farmers to track their income and expenses.
 
 ## Features
