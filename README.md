@@ -84,7 +84,7 @@ A comprehensive financial management system designed specifically for farmers to
    npm start
    ```
 
-6. Access the application at `http://localhost:5000`
+6. Access the application at `http://192.168.100.191:3000 `
 
 ## Email Configuration
 
