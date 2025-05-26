@@ -1,5 +1,7 @@
-// API URL - Using specific IP address and port 3000
-const API_URL = 'http://192.168.100.191:3000/api';
+// API URL - Dynamic based on environment
+const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+    ? 'http://192.168.100.191:3000/api'
+    : '/api';
 
 // Add debug logging
 console.log('API URL:', API_URL);
