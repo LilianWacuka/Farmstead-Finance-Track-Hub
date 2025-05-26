@@ -1,5 +1,5 @@
-// API URL
-const API_URL = 'http://localhost:5000/api';
+// API URL - Using specific IP address
+const API_URL = 'http://192.168.100.191:5000/api';
 
 // DOM Elements
 const authSection = document.getElementById('auth-section');

@@ -5,8 +5,14 @@ const path = require('path');
 
 const app = express();
 
+// CORS configuration
+app.use(cors({
+    origin: '*', // Allow all origins
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'x-auth-token']
+}));
+
 // Middleware
-app.use(cors());
 app.use(express.json());
 app.use(express.static('public'));
 
@@ -15,17 +21,18 @@ app.use('/api/auth', require('./routes/auth'));
 app.use('/api/records', require('./routes/records'));
 app.use('/api/reports', require('./routes/reports'));
 
-// Serve static files in production
-if (process.env.NODE_ENV === 'production') {
-    app.use(express.static('public'));
-    app.get('*', (req, res) => {
-        res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
-    });
-}
+// Error handling middleware
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({ msg: 'Something went wrong!' });
+});
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
-    .on('error', (err) => {
-        console.error('Server failed to start:', err);
-        process.exit(1);
-    }); 
+
+// Listen on all network interfaces
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server is running on port ${PORT}`);
+    console.log(`Access the application at:`);
+    console.log(`- Local: http://localhost:${PORT}`);
+    console.log(`- Network: http://192.168.100.191:${PORT}`);
+}); 
