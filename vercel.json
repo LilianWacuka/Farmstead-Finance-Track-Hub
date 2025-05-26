@@ -13,11 +13,12 @@
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "server.js",
+      "dest": "/server.js",
+      "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
       "headers": {
-        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Origin": "https://farmstead-finance-track-hub.vercel.app",
         "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-        "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, x-auth-token, Authorization",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization, x-auth-token",
         "Access-Control-Allow-Credentials": "true"
       }
     },

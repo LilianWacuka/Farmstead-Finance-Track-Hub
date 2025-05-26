@@ -5,25 +5,13 @@ const path = require('path');
 
 const app = express();
 
-// CORS configuration - most permissive for development
-app.use((req, res, next) => {
-    console.log('Incoming request:', {
-        method: req.method,
-        url: req.url,
-        headers: req.headers,
-        ip: req.ip,
-        ips: req.ips
-    });
-    
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, x-auth-token, Authorization');
-    res.header('Access-Control-Allow-Credentials', 'true');
-    if (req.method === 'OPTIONS') {
-        return res.sendStatus(200);
-    }
-    next();
-});
+// CORS configuration
+app.use(cors({
+    origin: ['http://localhost:3000', 'http://192.168.100.191:3000', 'https://farmstead-finance-track-hub.vercel.app'],
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'x-auth-token']
+}));
 
 // Middleware
 app.use(express.json());
@@ -70,14 +58,13 @@ app.use((err, req, res, next) => {
     });
     res.status(500).json({ 
         msg: 'Something went wrong!',
-        error: process.env.NODE_ENV === 'development' ? err.message : undefined
+        error: process.env.NODE_ENV === 'development' ? err.message : 'Internal server error'
     });
 });
 
-const PORT = process.env.PORT || 3000;
-
 // Only start the server if we're not in a Vercel environment
 if (process.env.NODE_ENV !== 'production') {
+    const PORT = process.env.PORT || 3000;
     app.listen(PORT, '0.0.0.0', () => {
         console.log('=================================');
         console.log(`Server is running on port ${PORT}`);
@@ -85,11 +72,6 @@ if (process.env.NODE_ENV !== 'production') {
         console.log('Access the application at:');
         console.log(`- Local: http://localhost:${PORT}`);
         console.log(`- Network: http://192.168.100.191:${PORT}`);
-        console.log('=================================');
-        console.log('To test the server, visit:');
-        console.log(`- http://192.168.100.191:${PORT}/test`);
-        console.log('=================================');
-        console.log('Server is listening on all network interfaces (0.0.0.0)');
         console.log('=================================');
     });
 }
