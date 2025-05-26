@@ -2,8 +2,18 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const pool = require('./config/db');
 
 const app = express();
+
+// Debug logging for environment variables
+console.log('Environment:', {
+    NODE_ENV: process.env.NODE_ENV,
+    DB_HOST: process.env.DB_HOST ? 'Set' : 'Not Set',
+    DB_USER: process.env.DB_USER ? 'Set' : 'Not Set',
+    DB_NAME: process.env.DB_NAME ? 'Set' : 'Not Set',
+    JWT_SECRET: process.env.JWT_SECRET ? 'Set' : 'Not Set'
+});
 
 // CORS configuration
 app.use(cors({
@@ -25,14 +35,36 @@ app.use((req, res, next) => {
 });
 
 // Basic route for testing
-app.get('/test', (req, res) => {
-    console.log('Test endpoint hit from IP:', req.ip);
-    res.json({ 
-        message: 'Server is running!',
-        timestamp: new Date().toISOString(),
-        clientIP: req.ip,
-        headers: req.headers
-    });
+app.get('/test', async (req, res) => {
+    try {
+        // Test database connection
+        const [rows] = await pool.query('SELECT 1');
+        res.json({ 
+            message: 'Server is running!',
+            timestamp: new Date().toISOString(),
+            clientIP: req.ip,
+            headers: req.headers,
+            database: 'Connected',
+            env: {
+                NODE_ENV: process.env.NODE_ENV,
+                DB_HOST: process.env.DB_HOST ? 'Set' : 'Not Set',
+                DB_USER: process.env.DB_USER ? 'Set' : 'Not Set',
+                DB_NAME: process.env.DB_NAME ? 'Set' : 'Not Set'
+            }
+        });
+    } catch (err) {
+        console.error('Database test error:', err);
+        res.status(500).json({
+            message: 'Server is running but database connection failed',
+            error: process.env.NODE_ENV === 'development' ? err.message : 'Database connection error',
+            env: {
+                NODE_ENV: process.env.NODE_ENV,
+                DB_HOST: process.env.DB_HOST ? 'Set' : 'Not Set',
+                DB_USER: process.env.DB_USER ? 'Set' : 'Not Set',
+                DB_NAME: process.env.DB_NAME ? 'Set' : 'Not Set'
+            }
+        });
+    }
 });
 
 // Routes
@@ -54,11 +86,28 @@ app.use((err, req, res, next) => {
         method: req.method,
         body: req.body,
         headers: req.headers,
-        ip: req.ip
+        ip: req.ip,
+        env: {
+            NODE_ENV: process.env.NODE_ENV,
+            DB_HOST: process.env.DB_HOST ? 'Set' : 'Not Set',
+            DB_USER: process.env.DB_USER ? 'Set' : 'Not Set',
+            DB_NAME: process.env.DB_NAME ? 'Set' : 'Not Set'
+        }
     });
+    
+    // Send detailed error in development, generic in production
     res.status(500).json({ 
         msg: 'Something went wrong!',
-        error: process.env.NODE_ENV === 'development' ? err.message : 'Internal server error'
+        error: process.env.NODE_ENV === 'development' ? {
+            message: err.message,
+            stack: err.stack,
+            env: {
+                NODE_ENV: process.env.NODE_ENV,
+                DB_HOST: process.env.DB_HOST ? 'Set' : 'Not Set',
+                DB_USER: process.env.DB_USER ? 'Set' : 'Not Set',
+                DB_NAME: process.env.DB_NAME ? 'Set' : 'Not Set'
+            }
+        } : 'Internal server error'
     });
 });
 

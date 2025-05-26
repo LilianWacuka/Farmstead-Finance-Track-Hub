@@ -1,5 +1,5 @@
 # Farmstead Finance Hub
-# Deployment live link
+# Deployment live link use this http://192.168.100.191:3000
 A comprehensive financial management system designed specifically for farmers to track their income and expenses.
 
 ## Features
